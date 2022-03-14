@@ -6,24 +6,46 @@ The solution for this project was based on the proposal made on the following we
 
 > The difference is that the algorithm has been trained using the `Spanish` language.
 
-## Training
+## Try it
 
-Most of the training was made using free versions of books in `Spanish`
+To use this project using a `Docker` image, please run the following commands
 
-## Development
-
-Build the project with
-
-    go build -o spelling .
-
-Build the docker image
-
-    docker build -f Dockerfile.deploy -t jorelosorio/spelling-corrector:latest .
-
-Run docker image
+    docker pull jorelosorio/spelling-corrector:latest
 
     docker run --name spelling-corrector -d -p 8080:80 -t jorelosorio/spelling-corrector:latest
 
-## Test the project
+Try it using the following example:
+
+    http://localhost:8080/spelling?word=espanol
+
+## Training
+
+Most of the training was made using free versions of books in `Spanish`.
+
+## Development
+
+Build the project, if you want to run it manually
+
+> Make sure the port `80` is currently free.
+
+    go build -o spelling .
+
+Then run the server
+
+    ./spelling
+
+> NOTE: This execution assumes a `Linux` OS.
+
+### Build Docker
+
+To build the docker image use `Dockerfile.deploy` and the command
+
+    docker build -f Dockerfile.deploy -t jorelosorio/spelling-corrector:latest .
+
+To run the docker image
+
+    docker run --name spelling-corrector -d -p 8080:80 -t jorelosorio/spelling-corrector:latest
+
+Test the `spelling corrector` from the docker image
 
     http://localhost:8080/spelling?word={YOUR_WORD}
