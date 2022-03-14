@@ -1,0 +1,12 @@
+{
+    "name": "Go",
+    "image": "mcr.microsoft.com/vscode/devcontainers/go:1.17",
+    "appPort": "8080:80",
+    "settings": {
+        "go.gopath": "/go",
+        "go.goroot": "/usr/local/go"
+    },
+    "extensions": [
+        "golang.go",
+    ]
+}
