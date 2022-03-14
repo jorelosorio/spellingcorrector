@@ -18,7 +18,7 @@ Build the project with
 
 Build the docker image
 
-    docker build -f Dockerfile.deploy -t jorelosorio/spelling-corrector:{VERSION} -t jorelosorio/spelling-corrector:latest .
+    docker build -f Dockerfile.deploy -t jorelosorio/spelling-corrector:latest .
 
 Run docker image
 
