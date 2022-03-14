@@ -16,6 +16,14 @@ Build the project with
 
     go build -o spelling .
 
+Build the docker image
+
+    docker build -f Dockerfile.deploy -t jorelosorio/spelling-corrector:{VERSION} -t jorelosorio/spelling-corrector:latest .
+
+Run docker image
+
+    docker run --name spelling-corrector -d -p 8080:80 -t jorelosorio/spelling-corrector:latest
+
 ## Test the project
 
     http://localhost:8080/spelling?word={YOUR_WORD}
