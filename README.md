@@ -8,7 +8,7 @@ The solution for this project was based on the proposal made on the following we
 
 ## Try it
 
-To use this project using a `Docker` image, please run the following commands
+Use it now with a Docker instance. It will open the `8080` port to access the service.
 
     docker pull jorelosorio/spelling-corrector:latest
 
@@ -18,23 +18,51 @@ Try it using the following example:
 
     http://localhost:8080/spelling?word=espanol
 
-## Training
+## Tools
 
-Most of the training was made using free versions of books in `Spanish`.
+- GoLang `1.17`
+- Docker
+- Visual Studio Code `Optional!`
+    > It requires a `Remote - Containers` extension. for more information please refers to: https://code.visualstudio.com/docs/remote/containers#_getting-started
 
 ## Development
 
-Build the project, if you want to run it manually
+This project contains a `Dockerfile` file with all required dependencies to run it using `Visual Studio Code` + `Remote - Containers` extension.
+However, if you want to make it run locally in your development machine, please follow the instructions below.
 
-> Make sure the port `80` is currently free.
+### Install Go
+
+Install it from https://go.dev/dl/
+
+### Build the Service
+
+> Make sure the port `80` is currently free. **Optionally could be changed in the code!**
 
     go build -o spelling .
 
-Then run the server
+Then run the service
 
     ./spelling
 
-> NOTE: This execution assumes a `Linux` OS.
+### Training
+
+Most of the training was made using free versions of books in `Spanish`. However, if you like to train for a new language or add extra words to the existing `dic` file, you can use the following main
+
+    ```go
+    package main
+
+    import (
+        "spelling-corrector/helpers"
+    )
+
+    func main() {
+        helpers.TrainFromFile("./texts/book.txt")
+    }
+    ```
+
+Call `TrainFromFile` function as many times you wish with different textbooks.
+
+> To start from scratch please `delete` first the document file `dic` otherwise you will be mixing words if you use other languages. **Only keep `dic` if you are going to append more data in `Spanish`**
 
 ### Build Docker
 
