@@ -1,4 +1,4 @@
-package helpers
+package internals
 
 import (
 	"encoding/gob"

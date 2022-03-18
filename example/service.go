@@ -2,15 +2,18 @@ package main
 
 import (
 	"net/http"
-	"spelling-corrector/helpers"
+	"os"
+
+	sc "github.com/jorelosorio/spellingcorrector"
 )
 
 func main() {
-	dic := helpers.LoadDictionary("./dic")
+	dictionaryFilePath := os.Args[0]
+	spelling := sc.NewSpelling(dictionaryFilePath)
 
 	http.HandleFunc("/spelling", func(w http.ResponseWriter, r *http.Request) {
 		word := r.URL.Query().Get("word")
-		correction := helpers.Correction(word, dic)
+		correction := spelling.Correction(word)
 		_, _ = w.Write([]byte(correction))
 	})
 
