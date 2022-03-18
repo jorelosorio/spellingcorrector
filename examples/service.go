@@ -8,8 +8,13 @@ import (
 )
 
 func main() {
+	// Dictionary file path
 	dictionaryFilePath := os.Args[1]
-	spelling := sc.NewSpelling(dictionaryFilePath)
+
+	spelling, err := sc.NewSpelling(dictionaryFilePath)
+	if err != nil {
+		panic(err)
+	}
 
 	http.HandleFunc("/spelling", func(w http.ResponseWriter, r *http.Request) {
 		word := r.URL.Query().Get("word")
@@ -17,7 +22,7 @@ func main() {
 		_, _ = w.Write([]byte(correction))
 	})
 
-	err := http.ListenAndServe(":80", nil)
+	err = http.ListenAndServe(":80", nil)
 	if err != nil {
 		panic(err)
 	}

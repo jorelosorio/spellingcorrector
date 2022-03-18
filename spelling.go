@@ -1,11 +1,7 @@
 package spellingcorrector
 
-import (
-	"github.com/jorelosorio/spellingcorrector/internals"
-)
-
 type Spelling struct {
-	dic *internals.Dictionary
+	dic *Dictionary
 }
 
 func (s *Spelling) edits1(word string) []string {
@@ -26,7 +22,7 @@ func (s *Spelling) edits1(word string) []string {
 			// Transposes
 			words = append(words, l+string(r[1])+string(r[0])+r[2:])
 		}
-		for _, c := range internals.Alphabet {
+		for _, c := range s.dic.Alphabet {
 			if lr > 0 {
 				// Replaces
 				words = append(words, l+string(c)+r[1:])
@@ -53,7 +49,7 @@ func (s *Spelling) selectBestFor(word string, words []string) string {
 	maxFreq := 0
 	correction := ""
 	for _, word := range words {
-		if freq, present := (*s.dic)[word]; present && freq > maxFreq {
+		if freq, present := s.dic.Words[word]; present && freq > maxFreq {
 			maxFreq, correction = freq, word
 		}
 	}
@@ -61,13 +57,17 @@ func (s *Spelling) selectBestFor(word string, words []string) string {
 	return correction
 }
 
-func NewSpelling(dicFilePath string) *Spelling {
-	dic := internals.LoadDictionary(dicFilePath)
-	return &Spelling{dic}
+func NewSpelling(dicFilePath string) (*Spelling, error) {
+	dic, err := LoadDictionary(dicFilePath)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Spelling{dic}, nil
 }
 
 func (s *Spelling) Correction(word string) string {
-	if _, present := (*s.dic)[word]; present {
+	if _, present := s.dic.Words[word]; present {
 		return word
 	}
 

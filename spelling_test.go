@@ -1,11 +1,10 @@
 package spellingcorrector
 
 import (
-	"fmt"
 	"testing"
 )
 
-var spelling = NewSpelling("./dictionaries/es.dic")
+var spelling, _ = NewSpelling("./dictionaries/es.dic")
 
 func TestCorrection_CorrectedWords(t *testing.T) {
 	if spelling.Correction("espanol") != "español" {
@@ -30,7 +29,6 @@ func TestCorrection_WordNotFound(t *testing.T) {
 }
 
 func TestCorrection_LongWordNotFound(t *testing.T) {
-	fmt.Println(spelling.Correction("calculadorase"))
 	if spelling.Correction("calculadorase") != "calculadorase" {
 		t.Error("Expected returned string to be 'calculadorase'")
 	}

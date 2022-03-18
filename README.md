@@ -8,9 +8,9 @@ The solution for this project was based on the proposal made on the following we
 
 Use it now with a Docker instance. It will open the `8080` port to access the service.
 
-    docker pull jorelosorio/spelling-corrector:latest
+    docker pull jorelosorio/spellingcorrector:latest
 
-    docker run --name spelling-corrector -d -p 8080:80 -t jorelosorio/spelling-corrector:latest
+    docker run --name spellingcorrector -d -p 8080:80 -t jorelosorio/spellingcorrector:latest
 
 Try it using the following example:
 
@@ -32,15 +32,15 @@ However, if you want to make it run locally in your development machine, please 
 
 Install it from https://go.dev/dl/
 
-### Build the Service
+### Build the Service `Example`
 
 > Make sure the port `80` is currently free. **Optionally could be changed in the code!**
 
-    go build -o spelling .
+    go build -o ./bin/ ./example/service.go
 
 Then run the service
 
-    ./spelling
+    ./bin/service ./dictionaries/es.dic
 
 ### Training
 
@@ -49,12 +49,10 @@ Most of the training was made using free versions of books in `Spanish`. However
     ```go
     package main
 
-    import (
-        "spelling-corrector/helpers"
-    )
+    import "github.com/jorelosorio/spellingcorrector/internals"
 
     func main() {
-        helpers.TrainFromFile("./texts/book.txt")
+        internals.TrainFromFile("./texts/book.txt")
     }
     ```
 
@@ -66,11 +64,11 @@ Call `TrainFromFile` function as many times you wish with different textbooks.
 
 To build the docker image use `Dockerfile.deploy` and the command
 
-    docker build -f Dockerfile.deploy -t jorelosorio/spelling-corrector:latest .
+    docker build -f Dockerfile.deploy -t jorelosorio/spellingcorrector:latest .
 
 To run the docker image
 
-    docker run --name spelling-corrector -d -p 8080:80 -t jorelosorio/spelling-corrector:latest
+    docker run --name spellingcorrector -d -p 8080:80 -t jorelosorio/spellingcorrector:latest
 
 Test the `spelling corrector` from the docker image
 
