@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	dictionaryFilePath := os.Args[0]
+	dictionaryFilePath := os.Args[1]
 	spelling := sc.NewSpelling(dictionaryFilePath)
 
 	http.HandleFunc("/spelling", func(w http.ResponseWriter, r *http.Request) {
