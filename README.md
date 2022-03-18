@@ -34,7 +34,7 @@ However, if you want to make it run locally in your development machine, please 
 
 Install it from https://go.dev/dl/
 
-### Build the Service `Example`
+### Build the `Example/Service`
 
 > Make sure the port `80` is currently free. **Optionally could be changed in the code!**
 
