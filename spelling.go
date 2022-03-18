@@ -53,10 +53,6 @@ func (s *Spelling) selectBestFor(word string, words []string) string {
 	maxFreq := 0
 	correction := ""
 	for _, word := range words {
-		if word == "" {
-			break
-		}
-
 		if freq, present := (*s.dic)[word]; present && freq > maxFreq {
 			maxFreq, correction = freq, word
 		}
