@@ -1,8 +1,10 @@
 # Spelling Corrector
 
+A spelling corrector for the Spanish language. But open to adding your own spell checkers.
+
 The solution for this project was based on the proposal made on the following website: http://norvig.com/spell-correct.html and some ideas from https://cxwangyi.wordpress.com/2012/02/15/peter-norvigs-spelling-corrector-in-go/ as well.
 
-> The difference is that the algorithm has been trained using the `Spanish` language.
+> The built-in data was trained using the `Spanish` language.
 
 ## Try it
 
@@ -36,7 +38,7 @@ Install it from https://go.dev/dl/
 
 > Make sure the port `80` is currently free. **Optionally could be changed in the code!**
 
-    go build -o ./bin/ ./example/service.go
+    go build -o ./bin/ ./examples/service.go
 
 Then run the service
 
@@ -44,25 +46,26 @@ Then run the service
 
 ### Training
 
-Most of the training was made using free versions of books in `Spanish`. However, if you like to train for a new language or add extra words to the existing `dic` file, you can use the following main
+Most of the training was made using free versions of books in `Spanish`. However, if you like to train for a new language you can use the following functions
 
-    ```go
+    ```golang
     package main
 
-    import "github.com/jorelosorio/spellingcorrector/internals"
+    import (
+        sc "github.com/jorelosorio/spellingcorrector"
+    )
 
     func main() {
-        internals.TrainFromFile("./texts/book.txt")
+        dic, _ := sc.NewDictionary("{YOUR_PATH_TO_DICTIONARY}", sc.ESAlphabet) // Or ENAlphabet
+        dic.TrainFromTextFile("{YOUR_INPUT_TEXT}")
     }
     ```
 
-Call `TrainFromFile` function as many times you wish with different textbooks.
-
-> To start from scratch please `delete` first the document file `dic` otherwise you will be mixing words if you use other languages. **Only keep `dic` if you are going to append more data in `Spanish`**
+> Call `TrainFromTextFile` function as many times you wish with different inputs.
 
 ### Build Docker
 
-To build the docker image use `Dockerfile.deploy` and the command
+To build the docker image use `.dockers/Dockerfile.deploy` and the command
 
     docker build -f Dockerfile.deploy -t jorelosorio/spellingcorrector:latest .
 
@@ -72,4 +75,4 @@ To run the docker image
 
 Test the `spelling corrector` from the docker image
 
-    http://localhost:8080/spelling?word={YOUR_WORD}
+    http://localhost:8080/spelling?word=espanol
