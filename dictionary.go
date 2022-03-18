@@ -12,6 +12,7 @@ import (
 
 const (
 	ESAlphabet = "abcdefghijklmnñopqrstuvwxyzáéíóúü"
+	ENAlphabet = "a-z"
 )
 
 type Dictionary struct {
