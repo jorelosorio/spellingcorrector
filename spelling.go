@@ -4,6 +4,31 @@ type Spelling struct {
 	dic *Dictionary
 }
 
+func NewSpelling(dicFilePath string) (*Spelling, error) {
+	dic, err := LoadDictionary(dicFilePath)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Spelling{dic}, nil
+}
+
+func (s *Spelling) Correction(word string) string {
+	if _, present := s.dic.Words[word]; present {
+		return word
+	}
+
+	if correction := s.selectBestFor(word, s.edits1(word)); correction != "" {
+		return correction
+	}
+
+	if correction := s.selectBestFor(word, s.edits2(word)); correction != "" {
+		return correction
+	}
+
+	return word
+}
+
 func (s *Spelling) edits1(word string) []string {
 	var splits [][]string
 	for i := 0; i < len(word)+1; i++ {
@@ -55,29 +80,4 @@ func (s *Spelling) selectBestFor(word string, words []string) string {
 	}
 
 	return correction
-}
-
-func NewSpelling(dicFilePath string) (*Spelling, error) {
-	dic, err := LoadDictionary(dicFilePath)
-	if err != nil {
-		return nil, err
-	}
-
-	return &Spelling{dic}, nil
-}
-
-func (s *Spelling) Correction(word string) string {
-	if _, present := s.dic.Words[word]; present {
-		return word
-	}
-
-	if correction := s.selectBestFor(word, s.edits1(word)); correction != "" {
-		return correction
-	}
-
-	if correction := s.selectBestFor(word, s.edits2(word)); correction != "" {
-		return correction
-	}
-
-	return word
 }
