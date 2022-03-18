@@ -6,7 +6,7 @@ import (
 
 var spelling = NewSpelling("./dictionaries/es.dic")
 
-func testCorrection(t *testing.T) {
+func TestCorrection(t *testing.T) {
 	if spelling.Correction("espanol") != "español" {
 		t.Error("Expected returned string to be 'español'")
 	}
