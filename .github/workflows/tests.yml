@@ -27,8 +27,8 @@ jobs:
       - name: Create the coverage directory
         run: mkdir coverage
 
-      - name: Run tests
-        run: go test -race -covermode atomic -coverprofile=./coverage/coverprofile.out
+      - name: Run tests with Go ${{ matrix.go }} on ${{ matrix.os }}
+        run: go test -coverprofile=./coverage/coverprofile.out
       
       - run: gcov2lcov -infile=./coverage/coverprofile.out -outfile=./coverage/lcov.info
 
