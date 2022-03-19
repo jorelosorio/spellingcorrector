@@ -7,7 +7,6 @@ on:
 
 jobs:
   build:
-    name: On ${{ matrix.os }}
     runs-on: ubuntu-latest
 
     steps:
