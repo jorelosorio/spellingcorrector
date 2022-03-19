@@ -1,6 +1,6 @@
 # Spelling Corrector
 
-[![Tests](https://github.com/jorelosorio/spellingcorrector/actions/workflows/Tests/badge.svg)](https://github.com/jorelosorio/spellingcorrector/actions)
+[![Tests](https://github.com/jorelosorio/spellingcorrector/actions/workflows/tests.yml/badge.svg)](https://github.com/jorelosorio/spellingcorrector/actions/workflows/tests.yml)
 
 A spelling corrector for the Spanish language. But open to adding your own spell checkers.
 
@@ -22,7 +22,7 @@ Try it using the following example:
 
 ## Tools
 
-- GoLang `1.17`
+- GoLang `1.17.x`
 - Docker
 - Visual Studio Code `Optional!`
     > It requires a `Remote - Containers` extension. for more information please refers to: https://code.visualstudio.com/docs/remote/containers#_getting-started
