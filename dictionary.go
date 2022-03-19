@@ -38,16 +38,16 @@ func LoadDictionary(filePath string) (*Dictionary, error) {
 		return nil, err
 	}
 
-	dic := Dictionary{filePath: filePath}
+	dic := &Dictionary{filePath: filePath, Words: make(map[string]int)}
 	decoder := gob.NewDecoder(file)
 
-	if err = decoder.Decode(&dic); err != nil {
+	if err = decoder.Decode(dic); err != nil {
 		return nil, err
 	}
 
 	file.Close()
 
-	return &dic, nil
+	return dic, nil
 }
 
 func (d *Dictionary) TrainFromTextFile(textFilePath string) error {
@@ -86,9 +86,12 @@ func (d *Dictionary) save() error {
 
 	encoder := gob.NewEncoder(file)
 
-	if err = encoder.Encode(*d); err != nil {
+	if err = encoder.Encode(d); err != nil {
 		return err
 	}
+
+	stats, _ := file.Stat()
+	fmt.Fprintln(os.Stdout, stats)
 
 	file.Close()
 
