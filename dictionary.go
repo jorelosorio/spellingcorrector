@@ -2,7 +2,6 @@ package spellingcorrector
 
 import (
 	"encoding/gob"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path"
@@ -26,7 +25,6 @@ func NewDictionary(filePath string, alphabet string) (*Dictionary, error) {
 
 	err := dic.save()
 	if err != nil {
-		fmt.Fprintln(os.Stdout, err, "Saving")
 		return nil, err
 	}
 
@@ -56,14 +54,8 @@ func (d *Dictionary) TrainFromTextFile(textFilePath string) error {
 		return err
 	}
 
-	pattern, err := regexp.Compile(`[\p{L}]+`)
-	fmt.Fprintln(os.Stdout, pattern, err, d)
-
-	pattern = regexp.MustCompile(`[\p{L}]+`)
-	fmt.Fprintln(os.Stdout, pattern, *d, &d)
+	pattern := regexp.MustCompile(`[\p{L}]+`)
 	words := pattern.FindAllString(strings.ToLower(string(text)), -1)
-
-	fmt.Fprintln(os.Stdout, words, d, d.Words)
 
 	for _, word := range words {
 		d.Words[word]++
@@ -78,15 +70,10 @@ func (d *Dictionary) save() error {
 	// Create dictionary's directory if not exists
 	dir := path.Dir(d.filePath)
 
-	err := os.Mkdir(dir, os.ModeDir)
-	if err != nil {
-		fmt.Fprintln(os.Stdout, err, "Creating directory", dir)
-		// return err
-	}
+	os.Mkdir(dir, os.ModeDir)
 
 	file, err := os.Create(d.filePath)
 	if err != nil {
-		fmt.Fprintln(os.Stdout, err, "Creating file")
 		return err
 	}
 	defer file.Close()
@@ -96,9 +83,6 @@ func (d *Dictionary) save() error {
 	if err = encoder.Encode(d); err != nil {
 		return err
 	}
-
-	stats, _ := file.Stat()
-	fmt.Fprintln(os.Stdout, stats)
 
 	return nil
 }
