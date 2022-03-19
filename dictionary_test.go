@@ -1,16 +1,15 @@
 package spellingcorrector
 
 import (
-	"log"
 	"os"
 	"path"
 	"testing"
 )
 
-func TestTrain(t *testing.T) {
+func newDictionary(t *testing.T) *Dictionary {
 	currentPath, err := os.Getwd()
 	if err != nil {
-		log.Println(err)
+		t.Error(err)
 	}
 
 	dictionaryFilePath := path.Join(currentPath, "tmp", "es.dic")
@@ -19,6 +18,11 @@ func TestTrain(t *testing.T) {
 		t.Error(err)
 	}
 
+	return dic
+}
+
+func TestTrain(t *testing.T) {
+	dic := newDictionary(t)
 	dic.TrainFromTextFile("./examples/test_sample1.txt")
 
 	if len(dic.Words) != 2 {
