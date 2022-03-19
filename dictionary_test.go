@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func newDictionary(t *testing.T) *Dictionary {
+func newTestDictionary(t *testing.T) *Dictionary {
 	currentPath, err := os.Getwd()
 	if err != nil {
 		t.Error(err)
@@ -43,7 +43,7 @@ func TestTrainDictionary(t *testing.T) {
 
 	textFilePath := path.Join(currentPath, "examples", "test_sample1.txt")
 
-	dic := newDictionary(t)
+	dic := newTestDictionary(t)
 	dic.TrainFromTextFile(textFilePath)
 
 	if len(dic.Words) != 2 {
@@ -59,7 +59,7 @@ func TestTrainDictionaryWithWrongText(t *testing.T) {
 
 	textFilePath := path.Join(currentPath, "examples", "wrong.txt")
 
-	dic := newDictionary(t)
+	dic := newTestDictionary(t)
 	err = dic.TrainFromTextFile(textFilePath)
 
 	if err == nil {
