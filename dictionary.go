@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	ESAlphabet = `[a-zñáéíóúü]+`
-	ENAlphabet = `[a-z]+`
+	ESAlphabet = "abcdefghijklmnopqrstuvwxyzñáéíóúü"
+	ENAlphabet = "abcdefghijklmnopqrstuvwxyz"
 )
 
 type Dictionary struct {
