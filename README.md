@@ -48,18 +48,18 @@ Then run the service
 
 Most of the training was made using free versions of books in `Spanish`. However, if you like to train for a new language you can use the following functions
 
-    ```golang
-    package main
+```go
+package main
 
-    import (
-        sc "github.com/jorelosorio/spellingcorrector"
-    )
+import (
+    sc "github.com/jorelosorio/spellingcorrector"
+)
 
-    func main() {
-        dic, _ := sc.NewDictionary("{YOUR_PATH_TO_DICTIONARY}", sc.ESAlphabet) // Or ENAlphabet
-        dic.TrainFromTextFile("{YOUR_INPUT_TEXT}")
-    }
-    ```
+func main() {
+    dic, _ := sc.NewDictionary("{YOUR_PATH_TO_DICTIONARY}", sc.ESAlphabet) // Or ENAlphabet
+    dic.TrainFromTextFile("{YOUR_INPUT_TEXT}")
+}
+```
 
 > Call `TrainFromTextFile` function as many times you wish with different inputs.
 
