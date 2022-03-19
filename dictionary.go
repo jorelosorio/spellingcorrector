@@ -26,6 +26,7 @@ func NewDictionary(filePath string, alphabet string) (*Dictionary, error) {
 
 	err := dic.save()
 	if err != nil {
+		fmt.Fprintln(os.Stdout, err, "Saving")
 		return nil, err
 	}
 
@@ -76,10 +77,16 @@ func (d *Dictionary) TrainFromTextFile(textFilePath string) error {
 func (d *Dictionary) save() error {
 	// Create dictionary's directory if not exists
 	dir := path.Dir(d.filePath)
-	_ = os.Mkdir(dir, os.ModeDir)
+
+	err := os.Mkdir(dir, os.ModeDir)
+	if err != nil {
+		fmt.Fprintln(os.Stdout, err, "Creating directory", dir)
+		return err
+	}
 
 	file, err := os.Create(d.filePath)
 	if err != nil {
+		fmt.Fprintln(os.Stdout, err, "Creating file")
 		return err
 	}
 	defer file.Close()
