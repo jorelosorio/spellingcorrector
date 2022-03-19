@@ -6,9 +6,7 @@ texts
 main
 bin
 tmp
-*.cov
-*.out
-*.lcov
+coverage
 
 # GO ====
 
