@@ -26,4 +26,7 @@ jobs:
       
       - run: go version
 
+      - name: Create a tmp directory to store test data
+        run: mkdir tmp
+
       - run: go test -covermode atomic -coverprofile=profile.cov
