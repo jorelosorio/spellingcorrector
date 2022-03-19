@@ -1,7 +1,7 @@
 # Spelling Corrector
 
 [![Tests](https://github.com/jorelosorio/spellingcorrector/actions/workflows/tests.yml/badge.svg)](https://github.com/jorelosorio/spellingcorrector/actions/workflows/tests.yml)
-[![Coverage Status](https://coveralls.io/repos/github/jorelosorio/spellingcorrector/badge.svg?branch=develop)](https://coveralls.io/github/jorelosorio/spellingcorrector?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/jorelosorio/spellingcorrector/badge.svg?branch=main)](https://coveralls.io/github/jorelosorio/spellingcorrector?branch=main)
 
 A spelling corrector for the Spanish language or create your own.
 
