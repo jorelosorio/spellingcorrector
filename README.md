@@ -3,6 +3,7 @@
 [![Tests](https://github.com/jorelosorio/spellingcorrector/actions/workflows/tests.yml/badge.svg)](https://github.com/jorelosorio/spellingcorrector/actions/workflows/tests.yml)
 [![Coverage Status](https://coveralls.io/repos/github/jorelosorio/spellingcorrector/badge.svg?branch=main)](https://coveralls.io/github/jorelosorio/spellingcorrector?branch=main)
 [![Go Reference](https://pkg.go.dev/badge/github.com/jorelosorio/spellingcorrector.svg)](https://pkg.go.dev/github.com/jorelosorio/spellingcorrector)
+[![Go Report Card](https://goreportcard.com/badge/github.com/jorelosorio/spellingcorrector)](https://goreportcard.com/report/github.com/jorelosorio/spellingcorrector)
 
 A spelling corrector for the Spanish language or create your own.
 
