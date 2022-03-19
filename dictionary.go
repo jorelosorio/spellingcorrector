@@ -56,7 +56,11 @@ func (d *Dictionary) TrainFromTextFile(textFilePath string) error {
 		return err
 	}
 
-	pattern := regexp.MustCompile(`[\p{L}]+`)
+	pattern, err := regexp.Compile(`[\p{L}]+`)
+	fmt.Fprintln(os.Stdout, pattern, err)
+
+	pattern = regexp.MustCompile(`[\p{L}]+`)
+	fmt.Fprintln(os.Stdout, pattern)
 	words := pattern.FindAllString(strings.ToLower(string(text)), -1)
 
 	fmt.Fprintln(os.Stdout, words, d)
