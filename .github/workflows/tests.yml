@@ -31,6 +31,7 @@ jobs:
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: ./coverage/profile.cov
           flag-name: ${{ matrix.os }}-go-${{ matrix.go }}
           parallel: true
@@ -42,4 +43,5 @@ jobs:
       - name: Coveralls Finished
         uses: coverallsapp/github-action@master
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true
