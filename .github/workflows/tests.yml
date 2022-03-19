@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         go: ["1.16.x", "1.17.x"]
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v2
@@ -24,14 +24,15 @@ jobs:
       - name: Create a temp directory to store test data
         run: mkdir tmp
 
+      - run: mkdir coverage
+
       - name: Run tests
-        run: go test -race -covermode atomic -coverprofile=coverage.out
+        run: go test -race -covermode atomic -coverprofile=./coverage/coverage
       
-      - run: gcov2lcov -infile=coverage.out -outfile=coverage.lcov
+      - run: gcov2lcov -infile=./coverage/coverage -outfile=./coverage/lcov.info
 
       - uses: coverallsapp/github-action@master
         with:
-          path-to-lcov: ./coverage.lcov
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: ${{matrix.os}}-go-${{ matrix.os }}
           parallel: true
