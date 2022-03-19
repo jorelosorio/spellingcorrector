@@ -1,11 +1,20 @@
 package spellingcorrector
 
 import (
+	"log"
+	"os"
+	"path"
 	"testing"
 )
 
 func TestTrain(t *testing.T) {
-	dic, err := NewDictionary("./tmp/es.dic", ESAlphabet)
+	currentPath, err := os.Getwd()
+	if err != nil {
+		log.Println(err)
+	}
+
+	dictionaryFilePath := path.Join(currentPath, "tmp", "es.dic")
+	dic, err := NewDictionary(dictionaryFilePath, ESAlphabet)
 	if err != nil {
 		t.Error(err)
 	}
