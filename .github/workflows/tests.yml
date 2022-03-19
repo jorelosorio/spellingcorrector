@@ -28,9 +28,9 @@ jobs:
         run: mkdir coverage
 
       - name: Run tests
-        run: go test -race -covermode atomic -coverprofile=./coverage/coverage
+        run: go test -race -covermode atomic -coverprofile=./coverage/coverprofile.out
       
-      - run: gcov2lcov -infile=./coverage/coverage -outfile=./coverage/lcov.info
+      - run: gcov2lcov -infile=./coverage/coverprofile.out -outfile=./coverage/lcov.info
 
       - uses: coverallsapp/github-action@master
         with:
