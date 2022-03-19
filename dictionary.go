@@ -16,8 +16,13 @@ const (
 	ENAlphabet = "abcdefghijklmnopqrstuvwxyz"
 )
 
+// Dictionary is the main structure of the algorithm and it contains
+// the alphabet in and the words that are built on top of that.
 type Dictionary struct {
+	// The alphabet which the dictionary is built
 	Alphabet string
+	// A map that contains the word and the number of apparitions on texts
+	// it will help to calculate the most probable correction
 	Words    map[string]int
 	filePath string
 }
