@@ -22,14 +22,14 @@ type Dictionary struct {
 }
 
 func NewDictionary(filePath string, alphabet string) (*Dictionary, error) {
-	dic := Dictionary{Alphabet: alphabet, filePath: filePath, Words: make(map[string]int)}
+	dic := &Dictionary{Alphabet: alphabet, filePath: filePath, Words: make(map[string]int)}
 
 	err := dic.save()
 	if err != nil {
 		return nil, err
 	}
 
-	return &dic, nil
+	return dic, nil
 }
 
 func LoadDictionary(filePath string) (*Dictionary, error) {
@@ -37,6 +37,7 @@ func LoadDictionary(filePath string) (*Dictionary, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer file.Close()
 
 	dic := &Dictionary{filePath: filePath, Words: make(map[string]int)}
 	decoder := gob.NewDecoder(file)
@@ -44,8 +45,6 @@ func LoadDictionary(filePath string) (*Dictionary, error) {
 	if err = decoder.Decode(dic); err != nil {
 		return nil, err
 	}
-
-	file.Close()
 
 	return dic, nil
 }
@@ -83,6 +82,7 @@ func (d *Dictionary) save() error {
 	if err != nil {
 		return err
 	}
+	defer file.Close()
 
 	encoder := gob.NewEncoder(file)
 
@@ -92,8 +92,6 @@ func (d *Dictionary) save() error {
 
 	stats, _ := file.Stat()
 	fmt.Fprintln(os.Stdout, stats)
-
-	file.Close()
 
 	return nil
 }
