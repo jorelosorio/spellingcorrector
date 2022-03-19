@@ -55,7 +55,7 @@ func (d *Dictionary) TrainFromTextFile(textFilePath string) error {
 		return err
 	}
 
-	pattern := regexp.MustCompile(d.Alphabet)
+	pattern := regexp.MustCompile(`\\p{L}+`)
 	words := pattern.FindAllString(strings.ToLower(string(text)), -1)
 
 	for _, word := range words {
