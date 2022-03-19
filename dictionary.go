@@ -57,13 +57,13 @@ func (d *Dictionary) TrainFromTextFile(textFilePath string) error {
 	}
 
 	pattern, err := regexp.Compile(`[\p{L}]+`)
-	fmt.Fprintln(os.Stdout, pattern, err)
+	fmt.Fprintln(os.Stdout, pattern, err, d)
 
 	pattern = regexp.MustCompile(`[\p{L}]+`)
-	fmt.Fprintln(os.Stdout, pattern)
+	fmt.Fprintln(os.Stdout, pattern, *d, &d)
 	words := pattern.FindAllString(strings.ToLower(string(text)), -1)
 
-	fmt.Fprintln(os.Stdout, words, d)
+	fmt.Fprintln(os.Stdout, words, d, d.Words)
 
 	for _, word := range words {
 		d.Words[word]++
