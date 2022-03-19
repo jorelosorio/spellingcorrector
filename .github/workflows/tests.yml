@@ -17,9 +17,7 @@ jobs:
 
       - uses: actions/setup-go@v2
         with:
-          go-version: ${{ matrix.go }}
-      
-      - run: go install github.com/jandelgado/gcov2lcov@latest
+          go-version: ${{ matrix.go }}      
 
       - name: Create a temp directory to store test data
         run: mkdir tmp
@@ -28,22 +26,11 @@ jobs:
         run: mkdir coverage
 
       - name: Run tests with Go ${{ matrix.go }} on ${{ matrix.os }}
-        run: go test -coverprofile=./coverage/coverprofile.out
+        run: go test -covermode atomic -coverprofile=profile.cov ./...
       
-      - run: gcov2lcov -infile=./coverage/coverprofile.out -outfile=./coverage/lcov.info
-
-      - uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          flag-name: ${{matrix.os}}-go-${{ matrix.go }}
-          parallel: true
-
-  finish:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true
+      - name: Coveralls
+        env:
+          COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          go get github.com/mattn/goveralls
+          $(go env GOPATH)/bin/goveralls -coverprofile=profile.cov -service=github -ignore=examples/*/*
