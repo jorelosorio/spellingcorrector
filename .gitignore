@@ -6,6 +6,7 @@ texts
 main
 bin
 tmp
+*.cov
 
 # GO ====
 
