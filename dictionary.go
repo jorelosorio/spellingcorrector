@@ -81,7 +81,7 @@ func (d *Dictionary) save() error {
 	err := os.Mkdir(dir, os.ModeDir)
 	if err != nil {
 		fmt.Fprintln(os.Stdout, err, "Creating directory", dir)
-		return err
+		// return err
 	}
 
 	file, err := os.Create(d.filePath)
