@@ -20,16 +20,19 @@ jobs:
           go-version: ${{ matrix.go }}
       
       - run: go version
+      - run: go install github.com/jandelgado/gcov2lcov@latest
 
       - name: Create a temp directory to store test data
         run: mkdir tmp
 
       - name: Run tests
-        run: go test -covermode atomic -coverprofile=profile.cov
+        run: go test -race -covermode atomic -coverprofile=coverage.out
+      
+      - run: gcov2lcov -infile=coverage.out -outfile=coverage.lcov
 
       - uses: coverallsapp/github-action@master
         with:
-          path-to-lcov: profile.cov
+          path-to-lcov: ./coverage.lcov
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: ${{matrix.os}}-go-${{ matrix.os }}
           parallel: true
