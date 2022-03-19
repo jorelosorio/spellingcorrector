@@ -2,6 +2,7 @@ package spellingcorrector
 
 import (
 	"encoding/gob"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path"
@@ -57,6 +58,8 @@ func (d *Dictionary) TrainFromTextFile(textFilePath string) error {
 
 	pattern := regexp.MustCompile(`[\p{L}]+`)
 	words := pattern.FindAllString(strings.ToLower(string(text)), -1)
+
+	fmt.Fprintln(os.Stdout, words, d)
 
 	for _, word := range words {
 		d.Words[word]++
