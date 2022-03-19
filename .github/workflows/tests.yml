@@ -20,10 +20,10 @@ jobs:
           go-version: ${{ matrix.go }}      
 
       - name: Create a temp directory to store test data
-        run: mkdir tmp
+        run: mkdir ./tmp
 
       - name: Create the coverage directory
-        run: mkdir coverage
+        run: mkdir ./coverage
 
       - name: Run tests with Go ${{ matrix.go }} on ${{ matrix.os }}
         run: go test -covermode atomic -coverprofile=./coverage/profile.cov
