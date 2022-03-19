@@ -26,4 +26,4 @@ jobs:
       
       - run: go version
 
-      # - run: go test -covermode atomic -coverprofile=profile.cov
+      - run: go test -covermode atomic -coverprofile=profile.cov
