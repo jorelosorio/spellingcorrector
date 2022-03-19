@@ -19,7 +19,6 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
       
-      - run: go version
       - run: go install github.com/jandelgado/gcov2lcov@latest
 
       - name: Create a temp directory to store test data
