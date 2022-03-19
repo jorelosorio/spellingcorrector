@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	ESAlphabet = `[abcdefghijklmnñopqrstuvwxyzáéíóúü]+`
+	ESAlphabet = `[a-zñáéíóúü]+`
 	ENAlphabet = `[a-z]+`
 )
 
