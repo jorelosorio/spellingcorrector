@@ -1,14 +1,18 @@
 package spellingcorrector
 
 import (
+	"os"
+	"path"
 	"testing"
 )
 
-const (
-	dictionaryFilePath = "./dictionaries/es.dic"
-)
-
 func newSpelling(t *testing.T) *Spelling {
+	currentPath, err := os.Getwd()
+	if err != nil {
+		t.Error(err)
+	}
+
+	dictionaryFilePath := path.Join(currentPath, "dictionaries", "es.dic")
 	spelling, err := NewSpelling(dictionaryFilePath)
 	if err != nil {
 		t.Error(err)
