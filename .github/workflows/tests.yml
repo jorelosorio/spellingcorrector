@@ -27,13 +27,17 @@ jobs:
 
       - name: Run tests with Go ${{ matrix.go }} on ${{ matrix.os }}
         run: go test -covermode atomic -coverprofile=./coverage/profile.cov ./...
+
+      - run: go install github.com/jandelgado/gcov2lcov@latest
+
+      - name: Use gcov2lcov
+        run: gcov2lcov -infile=./coverage/profile.cov -outfile=./coverage/lcov.info
       
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: ./coverage/profile.cov
-          flag-name: ${{ matrix.os }}-go-${{ matrix.go }}
+          flag-name: run-${{ matrix.os }}-go-${{ matrix.go }}
           parallel: true
   
   finish:
