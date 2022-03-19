@@ -26,11 +26,20 @@ jobs:
         run: mkdir coverage
 
       - name: Run tests with Go ${{ matrix.go }} on ${{ matrix.os }}
-        run: go test -covermode atomic -coverprofile=profile.cov ./...
+        run: go test -covermode atomic -coverprofile=./coverage/profile.cov ./...
       
-      - name: Coveralls
-        env:
-          COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          go get github.com/mattn/goveralls
-          $(go env GOPATH)/bin/goveralls -coverprofile=profile.cov -service=github -ignore=examples/*/*
+      - name: Coveralls Parallel
+        uses: coverallsapp/github-action@master
+        with:
+          path-to-lcov: ./coverage/profile.cov
+          flag-name: ${{ matrix.os }}-go-${{ matrix.go }}
+          parallel: true
+  
+  finish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          parallel-finished: true
