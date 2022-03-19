@@ -24,7 +24,7 @@ jobs:
       - name: Create a temp directory to store test data
         run: mkdir tmp
 
-      - mame: Create the coverage directory
+      - name: Create the coverage directory
         run: mkdir coverage
 
       - name: Run tests
