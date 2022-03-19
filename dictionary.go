@@ -2,7 +2,6 @@ package spellingcorrector
 
 import (
 	"encoding/gob"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path"
@@ -11,8 +10,8 @@ import (
 )
 
 const (
-	ESAlphabet = "abcdefghijklmnñopqrstuvwxyzáéíóúü"
-	ENAlphabet = "a-z"
+	ESAlphabet = `[abcdefghijklmnñopqrstuvwxyzáéíóúü]+`
+	ENAlphabet = `[a-z]+`
 )
 
 type Dictionary struct {
@@ -56,7 +55,7 @@ func (d *Dictionary) TrainFromTextFile(textFilePath string) error {
 		return err
 	}
 
-	pattern := regexp.MustCompile(fmt.Sprintf("[%s]+", d.Alphabet))
+	pattern := regexp.MustCompile(d.Alphabet)
 	words := pattern.FindAllString(strings.ToLower(string(text)), -1)
 
 	for _, word := range words {
