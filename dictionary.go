@@ -10,13 +10,13 @@ import (
 )
 
 const (
-	// Spanish alphabet
+	// ESAlphabet represents the alphabet of the Spanish vocabulary
 	ESAlphabet = "abcdefghijklmnopqrstuvwxyzñáéíóúü"
-	// English alphabet
+	// ENAlphabet represents the alphabet of the English vocabulary
 	ENAlphabet = "abcdefghijklmnopqrstuvwxyz"
 )
 
-// Dictionary is the main structure of the algorithm and it contains
+// Dictionary object is the main structure of the algorithm and it contains
 // the alphabet in and the words that are built on top of that.
 type Dictionary struct {
 	// The alphabet which the dictionary is built
@@ -27,7 +27,7 @@ type Dictionary struct {
 	filePath string
 }
 
-// Creates a new dictionary file in the specified path and the alphabet that correspond to it.
+// NewDictionary creates a new dictionary file at the specified path and the alphabet that correspond to it.
 // It returns a new Dictionary structure and any write error encountered.
 func NewDictionary(filePath string, alphabet string) (*Dictionary, error) {
 	dic := &Dictionary{Alphabet: alphabet, filePath: filePath, Words: make(map[string]int)}
@@ -40,7 +40,7 @@ func NewDictionary(filePath string, alphabet string) (*Dictionary, error) {
 	return dic, nil
 }
 
-// Loads a dictionary in the specified file path
+// LoadDictionary loads a dictionary in the specified file path
 // It returns a new Dictionary structure and any read error encountered.
 func LoadDictionary(filePath string) (*Dictionary, error) {
 	file, err := os.Open(filePath)
@@ -59,7 +59,7 @@ func LoadDictionary(filePath string) (*Dictionary, error) {
 	return dic, nil
 }
 
-// It reads all the words that can be found in the text file specified path,
+// TrainFromTextFile reads all the words that can be found in the text file specified path,
 // those will be used to train the dictionary.
 // It returns any read or write errors encountered.
 func (d *Dictionary) TrainFromTextFile(textFilePath string) error {
