@@ -2,7 +2,7 @@ package spellingcorrector
 
 // Spelling object contains a dictionary object
 // The main purpose of this struct is to provide actions/features that require process
-// the dictionary data
+// the dictionary data.
 type Spelling struct {
 	dic *Dictionary
 }
