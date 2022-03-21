@@ -1,10 +1,13 @@
 package spellingcorrector
 
+// Spelling object contains a dictionary object
+// The main purpose of this struct is to provide actions/features that require process
+// the dictionary data
 type Spelling struct {
 	dic *Dictionary
 }
 
-// It creates a new structure that contains a dictionary inside
+// NewSpelling creates a new structure that contains a dictionary inside
 // and it gets as a parameter the file path that points to the required dictionary.
 // It returns a new Spelling structure and any read error encountered.
 func NewSpelling(dicFilePath string) (*Spelling, error) {
@@ -16,7 +19,7 @@ func NewSpelling(dicFilePath string) (*Spelling, error) {
 	return &Spelling{dic}, nil
 }
 
-// Select the best possible correction for the specified word.
+// Correction select the best possible correction for the specified word.
 // Returns the correction if there was one.
 func (s *Spelling) Correction(word string) string {
 	if _, present := s.dic.Words[word]; present {
