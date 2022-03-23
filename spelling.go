@@ -27,40 +27,51 @@ func (s *Spelling) Correction(word string) string {
 	}
 
 	words := make(chan string)
-	maxFreq := 0
-	correction := ""
+	go s.genAltsOf(word, words)
 
-	go s.genAlternativesOf(word, words, true)
+	if correction := s.findMaxFreqWord(words); correction != "" {
+		return correction
+	}
 
-	for w := range words {
-		if w == "" {
+	expanedWords := make(chan string)
+	go s.genAltsOf(word, words)
+
+	for expandedWord := range words {
+		if expandedWord == "" {
 			break
 		}
 
-		if freq, present := s.dic.Words[w]; present && freq > maxFreq {
-			maxFreq, correction = freq, w
-		}
+		go s.genAltsOf(expandedWord, expanedWords)
 	}
 
-	if correction != "" {
+	if correction := s.findMaxFreqWord(expanedWords); correction != "" {
 		return correction
 	}
 
 	return word
 }
 
-func (s *Spelling) genAlternativesOf(word string, words chan string, expand bool) {
+func (s *Spelling) findMaxFreqWord(words chan string) string {
+	maxFreq := 0
+	correction := ""
+
+	for word := range words {
+		if word == "" {
+			break
+		}
+
+		if freq, present := s.dic.Words[word]; present && freq > maxFreq {
+			maxFreq, correction = freq, word
+		}
+	}
+
+	return correction
+}
+
+func (s *Spelling) genAltsOf(word string, words chan string) {
 	splits := [][]string{}
 	for i := 0; i < len(word)+1; i++ {
 		splits = append(splits, []string{word[:i], word[i:]})
-	}
-
-	callGenAltNoExpandWith := func(wordToExpand string) string {
-		if expand {
-			go s.genAlternativesOf(wordToExpand, words, false)
-		}
-
-		return wordToExpand
 	}
 
 	for _, wordPair := range splits {
@@ -68,23 +79,21 @@ func (s *Spelling) genAlternativesOf(word string, words chan string, expand bool
 		lr := len(r)
 
 		if lr > 0 {
-			words <- callGenAltNoExpandWith(l + r[1:])
+			words <- l + r[1:]
 		}
 
 		if lr > 1 {
-			words <- callGenAltNoExpandWith(l + string(r[1]) + string(r[0]) + r[2:])
+			words <- l + string(r[1]) + string(r[0]) + r[2:]
 		}
 
 		for _, c := range s.dic.Alphabet {
 			if lr > 0 {
-				words <- callGenAltNoExpandWith(l + string(c) + r[1:])
+				words <- l + string(c) + r[1:]
 			}
 
-			words <- callGenAltNoExpandWith(l + string(c) + r)
+			words <- l + string(c) + r
 		}
 	}
 
-	if expand {
-		words <- ""
-	}
+	words <- ""
 }
