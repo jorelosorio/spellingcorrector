@@ -27,7 +27,6 @@ func TestShortWordCorrected(t *testing.T) {
 	if spelling.Correction("espanol") != "español" {
 		t.Error("Expected returned string to be 'español'")
 	}
-
 }
 
 func TestShortWordNotCorrected(t *testing.T) {
@@ -37,7 +36,6 @@ func TestShortWordNotCorrected(t *testing.T) {
 		t.Error("Expected returned string to be 'jorge'")
 	}
 }
-
 
 func TestCorrectedLongWord(t *testing.T) {
 	spelling := newSpelling(t)
