@@ -21,27 +21,16 @@ func newSpelling(t *testing.T) *Spelling {
 	return spelling
 }
 
-func TestCorrectedWord(t *testing.T) {
+func TestShortWordCorrected(t *testing.T) {
 	spelling := newSpelling(t)
 
 	if spelling.Correction("espanol") != "español" {
 		t.Error("Expected returned string to be 'español'")
 	}
 
-	if spelling.Correction("aritocraticamente") != "aristocráticamente" {
-		t.Error("Expected returned string to be 'aristocráticamente'")
-	}
 }
 
-func TestExistingWord(t *testing.T) {
-	spelling := newSpelling(t)
-
-	if spelling.Correction("español") != "español" {
-		t.Error("Expected returned string to be 'español'")
-	}
-}
-
-func TestWordNotFound(t *testing.T) {
+func TestShortWordNotCorrected(t *testing.T) {
 	spelling := newSpelling(t)
 
 	if spelling.Correction("jorge") != "jorge" {
@@ -49,7 +38,16 @@ func TestWordNotFound(t *testing.T) {
 	}
 }
 
-func TestLongWordNotFound(t *testing.T) {
+
+func TestCorrectedLongWord(t *testing.T) {
+	spelling := newSpelling(t)
+
+	if spelling.Correction("aritocraticamente") != "aristocráticamente" {
+		t.Error("Expected returned string to be 'aristocráticamente'")
+	}
+}
+
+func TestNotCorrectedLongWord(t *testing.T) {
 	spelling := newSpelling(t)
 
 	if spelling.Correction("calculadorase") != "calculadorase" {
