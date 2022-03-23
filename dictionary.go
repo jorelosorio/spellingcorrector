@@ -10,19 +10,19 @@ import (
 )
 
 const (
-	// ESAlphabet represents the alphabet of the Spanish vocabulary
+	// ESAlphabet represents the alphabet of the Spanish vocabulary.
 	ESAlphabet = "abcdefghijklmnopqrstuvwxyzñáéíóúü"
-	// ENAlphabet represents the alphabet of the English vocabulary
+	// ENAlphabet represents the alphabet of the English vocabulary.
 	ENAlphabet = "abcdefghijklmnopqrstuvwxyz"
 )
 
 // Dictionary object is the main structure of the algorithm and it contains
-// the alphabet in and the words that are built on top of that.
+// the alphabet in and the words.
 type Dictionary struct {
-	// The alphabet which the dictionary is built
+	// Alphabet of the dictionary.
 	Alphabet string
-	// A map that contains the word and the number of apparitions on texts
-	// it will help to calculate the most probable correction
+	// Words is a map that contains the word and the frequency number on texts,
+	// it will help to calculate the most probable correction.
 	Words    map[string]int
 	filePath string
 }
@@ -61,7 +61,7 @@ func LoadDictionary(filePath string) (*Dictionary, error) {
 
 // TrainFromTextFile reads all the words that can be found in the text file specified path,
 // those will be used to train the dictionary.
-// It returns any read or write errors encountered.
+// It returns any read/write errors encountered.
 func (d *Dictionary) TrainFromTextFile(textFilePath string) error {
 	text, err := ioutil.ReadFile(textFilePath)
 	if err != nil {

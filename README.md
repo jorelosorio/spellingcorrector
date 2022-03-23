@@ -49,6 +49,28 @@ Then run the service
 
     ./bin/service ./dictionaries/es.dic
 
+### Example of correction
+
+Simple usage example of the `Corrector` function.
+
+```go
+package main
+
+import (
+	"fmt"
+
+	sc "github.com/jorelosorio/spellingcorrector"
+)
+
+func main() {
+	spelling, _ := sc.NewSpelling("{YOUR_PATH_TO_DICTIONARY}")
+	correctedWord := spelling.Correction("espanol")
+	fmt.Println(correctedWord)
+}
+```
+
+> `NewSpelling` functions returns (`Spelling`, `error`), make sure to handle errors when creating a new object.
+
 ### Training
 
 Most of the training was made using free versions of books in `Spanish`. However, if you like to train for a new language you can use the following functions
@@ -67,6 +89,8 @@ func main() {
 ```
 
 > Call `TrainFromTextFile` function as many times you wish with different inputs.
+
+> `NewDictionary` functions returns (`Dictionary`, `error`), make sure to handle errors when creating a new dictionary.
 
 ### Build Docker
 

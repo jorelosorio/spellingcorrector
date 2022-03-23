@@ -26,66 +26,76 @@ func (s *Spelling) Correction(word string) string {
 		return word
 	}
 
-	if correction := s.selectBestFor(word, s.edits1(word)); correction != "" {
+	words := make(chan string)
+	go s.genAltsOf(word, words)
+
+	if correction := s.findMaxFreqWord(words); correction != "" {
 		return correction
 	}
 
-	if correction := s.selectBestFor(word, s.edits2(word)); correction != "" {
+	expanedWords := make(chan string)
+	go s.genAltsOf(word, words)
+
+	for expandedWord := range words {
+		if expandedWord == "" {
+			break
+		}
+
+		go s.genAltsOf(expandedWord, expanedWords)
+	}
+
+	if correction := s.findMaxFreqWord(expanedWords); correction != "" {
 		return correction
 	}
 
 	return word
 }
 
-func (s *Spelling) edits1(word string) []string {
-	var splits [][]string
-	for i := 0; i < len(word)+1; i++ {
-		splits = append(splits, []string{word[:i], word[i:]})
-	}
-
-	var words []string
-	for _, v := range splits {
-		l, r := v[0], v[1]
-		lr := len(r)
-		if lr > 0 {
-			// Deletes
-			words = append(words, l+r[1:])
-		}
-		if lr > 1 {
-			// Transposes
-			words = append(words, l+string(r[1])+string(r[0])+r[2:])
-		}
-		for _, c := range s.dic.Alphabet {
-			if lr > 0 {
-				// Replaces
-				words = append(words, l+string(c)+r[1:])
-			}
-
-			// Inserts
-			words = append(words, l+string(c)+r)
-		}
-	}
-
-	return words
-}
-
-func (s *Spelling) edits2(word string) []string {
-	var e2 []string
-	for _, e1 := range s.edits1(word) {
-		e2 = append(e2, s.edits1(e1)...)
-	}
-
-	return e2
-}
-
-func (s *Spelling) selectBestFor(word string, words []string) string {
+func (s *Spelling) findMaxFreqWord(words chan string) string {
 	maxFreq := 0
 	correction := ""
-	for _, word := range words {
+
+	for word := range words {
+		if word == "" {
+			break
+		}
+
 		if freq, present := s.dic.Words[word]; present && freq > maxFreq {
 			maxFreq, correction = freq, word
 		}
 	}
 
 	return correction
+}
+
+// genAltsOf finds all possible combinations swapping the order of the alphabet to generate new
+// possible words.
+func (s *Spelling) genAltsOf(word string, words chan string) {
+	splits := [][]string{}
+	for i := 0; i < len(word)+1; i++ {
+		splits = append(splits, []string{word[:i], word[i:]})
+	}
+
+	for _, wordPair := range splits {
+		l, r := wordPair[0], wordPair[1]
+		lr := len(r)
+
+		if lr > 0 {
+			words <- l + r[1:]
+		}
+
+		if lr > 1 {
+			words <- l + string(r[1]) + string(r[0]) + r[2:]
+		}
+
+		for _, c := range s.dic.Alphabet {
+			if lr > 0 {
+				words <- l + string(c) + r[1:]
+			}
+
+			words <- l + string(c) + r
+		}
+	}
+
+	words <- ""
 }
