@@ -68,6 +68,8 @@ func (s *Spelling) findMaxFreqWord(words chan string) string {
 	return correction
 }
 
+// genAltsOf finds all possible combinations swapping the order of the alphabet to generate new
+// possible words.
 func (s *Spelling) genAltsOf(word string, words chan string) {
 	splits := [][]string{}
 	for i := 0; i < len(word)+1; i++ {
