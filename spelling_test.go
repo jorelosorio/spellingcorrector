@@ -29,7 +29,7 @@ func TestCorrectedWord(t *testing.T) {
 	}
 
 	if spelling.Correction("aritocraticamente") != "aristocráticamente" {
-		t.Error("Expected returned string to be 'socializar'")
+		t.Error("Expected returned string to be 'aristocráticamente'")
 	}
 }
 
